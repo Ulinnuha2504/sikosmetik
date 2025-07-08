@@ -25,6 +25,7 @@
                         <th>hargabarang</th>
                         <th>idjenisbarang</th>
                         <th>keterangan barang</th>
+                        <th>Opsi</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -34,6 +35,7 @@
                         <th>hargabarang</th>
                         <th>idjenisbarang</th>
                         <th>keterangan barang</th>
+                        <th>Opsi</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -55,6 +57,7 @@
                             <td><?php echo $data['hargabarang']; ?></td>
                             <td><?php echo $data['namajenisbarang']; ?></td>
                             <td><?php echo $data['keteranganbarang']; ?></td>
+                            <td> <a href="index.php?page=editbarang&id=<?php echo $data['idbarang']; ?>" class="btn btn-success btn-sm">Edit</a> </td>
                         </tr>
                     <?php
                     }
