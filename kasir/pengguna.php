@@ -6,6 +6,15 @@
             <div class="card-header">
                 <i class="fas fa-users"></i>
                 Data Pengguna Sistem
+           <!-- Link /button untuk menambah data jenis barang -->
+           <div class="float-end">
+                    <a href="index.php?page=tambahpengguna" class="btn btn-dark float-right">
+                        <span class=" icon text-white-10">
+                            <i class="fas fa-plus text-white"></i>
+                        </span>
+                        <span class="text">Tambah pengguna</span>
+                    </a>
+                </div>      
                 
             </div>
             <div class="card-body">
@@ -37,7 +46,7 @@
                         //variabel no urut
                         $no = 0;
                         //panggil semua data dari tabel pengguna
-                        $qdata = mysqli_query($sambung, "SELECT * FROM pengguna WHERE username='".$_SESSION["username"]."'");
+                        $qdata = mysqli_query($sambung, "SELECT * FROM pengguna");
                         //buat array gabung perulangan
                         while ($data = mysqli_fetch_array($qdata)) {
                             //buat no urut

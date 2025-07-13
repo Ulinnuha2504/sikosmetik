@@ -8,15 +8,15 @@
                 Form Tambah Data jenisbarang
             </div>
             <div class="card-body">
-                <form action="prosestambahjenis barang.php" method="post">
+                <form action="prosestambahjenisbarang.php" method="post">
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="namajenis barang" name="namajenis barang" type="text" placeholder="Nama jenisbarang" required />
-                        <label for="Inputnamakategori">Nama jenisbarang</label>
+                        <input class="form-control" id="namajenisbarang" name="namajenisbarang" type="text" placeholder="Namajenisbarang" required />
+                        <label for="Inputnamajenisbarang">Nama jenis barang</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="keteranganjenis barang" name="keteranganjenisbarang" type="text" placeholder="Keterangan jenisbarang" required />
-                        <label for="keterangankategori">Keterangan jenisbarang</label>
+                        <input class="form-control" id="keteranganjenisbarang" name="keteranganjenisbarang" type="text" placeholder="Keteranganjenisbarang" required />
+                        <label for="keteranganjenisbarang">Keterangan jenis barang</label>
                     </div>
 
 

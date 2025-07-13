@@ -9,7 +9,7 @@
                 </div>
                 <!-- Link /button untuk menambah data jenis barang -->
                 <div class="float-end">
-                    <a href="index.php?page=tambahkategori" class="btn btn-dark float-right">
+                    <a href="index.php?page=tambahjenisbarang" class="btn btn-dark float-right">
                         <span class=" icon text-white-10">
                             <i class="fas fa-plus text-white"></i>
                         </span>

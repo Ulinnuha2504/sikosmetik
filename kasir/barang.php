@@ -6,9 +6,15 @@
             <div class="card-header">
                 <i class="fas fa-utensils"></i>
                 Daftar Barang Sinar Kosmetik Thamrin
-                <!-- Link button untuk menambah data Barang -->
-                <div class="float-end">
-                </div>
+               <!-- Link /button untuk menambah data barang -->
+           <div class="float-end">
+                    <a href="index.php?page=tambahbarang" class="btn btn-dark float-right">
+                        <span class=" icon text-white-10">
+                            <i class="fas fa-plus text-white"></i>
+                        </span>
+                        <span class="text">Tambah barang</span>
+                    </a>
+                </div>    
             </div>
             <div class="card-body">
             <table id="datatablesSimple">
@@ -19,6 +25,7 @@
                         <th>hargabarang</th>
                         <th>idjenisbarang</th>
                         <th>keterangan barang</th>
+                        <th>Opsi</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -28,6 +35,7 @@
                         <th>hargabarang</th>
                         <th>idjenisbarang</th>
                         <th>keterangan barang</th>
+                        <th>Opsi</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -35,7 +43,7 @@
                     //Membuat variabel nomor
                     $nomor = 0;
                     //Query untuk memanggil data kategori dengan variabel qdata
-                    $qdata = mysqli_query($sambung, "SELECT * FROM barang inner join jenisbarang on barang.idbarang=barang.idbarang");
+                    $qdata = mysqli_query($sambung, "SELECT * FROM barang inner join jenisbarang on barang.idjenisbarang=jenisbarang.idjenisbarang");
                     //perulangan WHILE dan penampungan data dalam array data
                     while ($data = mysqli_fetch_array($qdata))
                     //Awal perulangan
@@ -45,10 +53,11 @@
                     ?>
                         <tr>
                             <td class="text-center"><?php echo $nomor; ?></td>
-                            <td><?php echo $data['idbarang']; ?></td>
                             <td><?php echo $data['namabarang']; ?></td>
                             <td><?php echo $data['hargabarang']; ?></td>
+                            <td><?php echo $data['namajenisbarang']; ?></td>
                             <td><?php echo $data['keteranganbarang']; ?></td>
+                            <td> <a href="index.php?page=editbarang&id=<?php echo $data['idbarang']; ?>" class="btn btn-success btn-sm">Edit</a> </td>
                         </tr>
                     <?php
                     }
