@@ -1,162 +1,111 @@
 <?php 
-//panggil koneksi
 include "../connectdb.php";
-//ambil data id (dari link)
-$awal=mysqli_real_escape_string($sambung,$_GET["awal"]);
-$akhir=mysqli_real_escape_string($sambung,$_GET["akhir"]);
 
+$awal = mysqli_real_escape_string($sambung, $_GET["awal"]);
+$akhir = mysqli_real_escape_string($sambung, $_GET["akhir"]);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan</title>
     <style>
-        @media screen {
-            .noprint{
-                display: block;
-            }
-            .noshow{
-                display: none;
-            }
-        }
-        @media print{
-            .noprint{
-                display: none;
-            }
-            .noshow{
-                display: block;
-            }
-        }
-        thead th {
-            border-top: 2px solid;
-            border-color: darkgray;
-            border-bottom: 2px solid;
-        }
-        body,th,td {
-            font-size: 12pt;
-        }
-        h3,h4 {
-            line-height: 0.5;
-            letter-spacing: 0.5;
-        }
-        tfoot td {
-            border-top: 2px solid;
-            border-color: darkgray;
-            border-bottom: 2px solid;
-        }
+        @media screen {.noprint {display: block;} .noshow {display: none;}}
+        @media print {.noprint {display: none;} .noshow {display: block;}}
+        body, th, td { font-size: 12pt; }
+        h3, h4 { line-height: 0.5; letter-spacing: 0.5; }
+        thead th, tfoot td { border-top: 2px solid darkgray; border-bottom: 2px solid darkgray; }
     </style>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <body>
-    <div align="center">
-        <!-- tombol -->
+</head>
+<body>
+<div align="center">
+    <!-- Tombol -->
+    <div class="noprint">
+        <br>
+        <a href="javascript:window.print();"><button class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button></a>
+        <a href="javascript:window.close();"><button class="btn btn-danger"><i class="fa fa-circle-xmark"></i> Tutup</button></a>
         <br><br>
-        <span class="noprint">
-        <a href="javascript:window.print();"><button class="btn btn-primary"><i class="fa fa-print"></i></button></a>
-        <a href="javascript:window.close();"><button class="btn btn-danger"><i class="fa fa-circle-xmark"></i></button></a>
-        </span>
-        <br><br>
-        <!-- Kop -->
-       
-        <div class="row" style="max-width: 800px;">
-            <div class="col-lg-3">
-                <img src="../gambarmenu/menulogo.jpg" style="max-width :100px;"> <br>
+    </div>
+
+    <!-- Kop -->
+    <div style="max-width: 800px;">
+        <div style="display: flex;">
+            <div style="flex:1;">
+            <img src="https://img.icons8.com/color/96/shop.png" style="max-width: 100px;">
             </div>
-            <div class="col-lg-9 text-start">
-                <span style="font-size: 13pt; font-weight:normal;">CETAK LAPORAN</span><br>
-                <span style="font-size: 28pt; font-weight:bold; line-height:0.7;">SINAR KOSMETIK THAMRIN SEMARANG</span> <br>
-                <span style="font-size: 13pt; font-weight:bold; line-height:0.7;">Periode : <?php echo $awal. ' s.d. ' .$akhir?></span><br>
+            <div style="flex: 3; text-align: left;">
+                <span style="font-size: 13pt;">CETAK LAPORAN</span><br>
+                <span style="font-size: 22pt; font-weight: bold;">SINAR KOSMETIK THAMRIN SEMARANG</span><br>
+                <span style="font-size: 13pt; font-weight: bold;">Periode: <?php echo $awal . " s.d. " . $akhir; ?></span>
             </div>
         </div>
-        
-        <hr width="800px">
+        <hr>
+    </div>
 
-        <table style="width: 800px;">
+    <!-- Tabel -->
+    <table style="width:800px;" cellspacing="0" cellpadding="5">
         <thead>
-            <tr style="text-align:center;">
+            <tr align="center">
+                <th>No</th>
                 <th>No Nota</th>
-                <th>Tanggal Pembelian</th>
+                <th>Tanggal</th>
                 <th>Jam</th>
                 <th>Kasir</th>
-                <th>Total Order</th>
-           </tr>
+                <th>Total</th>
+            </tr>
         </thead>
         <tbody>
             <?php
-            //Membuat variabel nomor
-            $nomor = 0;
+            $nomor = 1;
             $total = 0;
-            //Query untuk memanggil data kategori dengan variabel qdata
-            $qdata = mysqli_query($sambung, "SELECT * FROM transaksi WHERE tanggaltransaksi between '$awal' AND '$akhir'");
-            //perulangan WHILE dan penampungan data dalam array data
-            while ($data = mysqli_fetch_array($qdata))
-            //Awal perulangan
-                    {
-            //Membuat nomor urut
-            $nomor++;
-                    ?>
-            <tr>
-                <td class="text-center"><?php echo $nomor; ?></td>
-                <td class="text-center"><?php echo ($data['nonota']); ?></td>
-                <td class="text-center"><?php echo $data['tanggalpembelian']; ?></td>
-                <td class="text-center"><?php echo $data['jam']; ?></td>
-                <td class="text-center"><?php echo $data['kasir']; ?></td>
-                <td class="text-center">
-                <?php echo $data['totalpembelian']; ?></td>
-                <td>
-                    <?php 
-                     // rumus untuk total
-                    $total = $total + $data['totalpembelian'];
-                    ?>
-                </td>
+            $qdata = mysqli_query($sambung, "SELECT * FROM transaksi WHERE tanggaltransaksi BETWEEN '$awal' AND '$akhir' ORDER BY tanggaltransaksi ASC");
+            while ($data = mysqli_fetch_array($qdata)) {
+                $total += $data['totalharga'];
+            ?>
+            <tr align="center">
+                <td><?php echo $nomor++; ?></td>
+                <td><?php echo $data['nonota']; ?></td>
+                <td><?php echo $data['tanggaltransaksi']; ?></td>
+                <td><?php echo substr($data['jam'], 0, 5); ?></td>
+                <td><?php echo $data['idpengguna']; ?></td>
+                <td align="right"><?php echo number_format($data['totalharga'], 0, ",", "."); ?></td>
             </tr>
-                <?php 
-                    }
-                ?>
+            <?php } ?>
         </tbody>
         <tfoot>
-                <td colspan="5" class="text-center">Total</td>
-                <td class="text-end">
-                <?php 
-                echo number_format($total,0,",",",");
-                 ?>
-                </td>
+            <tr>
+                <td colspan="5" align="center"><strong>Total</strong></td>
+                <td align="right"><strong><?php echo number_format($total, 0, ",", "."); ?></strong></td>
+            </tr>
         </tfoot>
     </table>
-    <br>
+
+    <br><br>
+
+    <!-- TTD -->
     <?php 
-    // ambil data pengguna
-    $qpengguna=mysqli_query($sambung,"SELECT * FROM pengguna WHERE hakakses='pimpinan'");
-    $datapengguna=mysqli_fetch_array($qpengguna);
+    $qpengguna = mysqli_query($sambung, "SELECT * FROM pengguna WHERE hakakses='pimpinan' LIMIT 1");
+    $datapimpinan = mysqli_fetch_array($qpengguna);
     ?>
-    <table style="width: 800px;">
+
+    <table style="width:800px;">
         <tr>
-            <td class="text-center">
-                <br>
-                Mengetahui <br> 
-                Pimpinan
-                <br><br><br><br>
-                (Dwi)
-
-                (<?php echo $datapengguna['namauser']; ?>)
+            <td align="center">
+                Mengetahui,<br>
+                Pimpinan<br><br><br><br>
+                <strong>(_____________________)</strong>
             </td>
-            <td>
-
-            </td>
-            <td class="text-center">
-                Semarang, 30 Juni 2025<?php echo date('d M Y');?>
-                <br>
-                SINAR KOSMETIK THMARIN SEMARANG <br>
-                Kasir
-                <br><br><br><br>
-                (Bella)
+            <td></td>
+            <td align="center">
+                Semarang, <?php echo date("d M Y"); ?><br>
+                Kasir<br><br><br><br>
+                <strong>(_________________)</strong>
             </td>
         </tr>
     </table>
-    </div>
-    </body>
+</div>
+</body>
 </html>
