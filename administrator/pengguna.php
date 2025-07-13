@@ -21,7 +21,7 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>idpengguna</th>
+                            <th>No</th>
                             <th>namauser</th>
                             <th>username</th>
                             <th>Password</th>
@@ -32,7 +32,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>idpengguna</th>
+                            <th>No</th>
                             <th>namauser</th>
                             <th>username</th>
                             <th>Password</th>

@@ -27,7 +27,7 @@ if ($cekdata == 0) {
     if ($data["hakakses"] == 'administrator') {
         header('location:administrator/');
     } elseif ($data["hakakses"] == 'kasir') {
-        header('location:administrator/');
+        header('location:kasir/');
     } elseif ($data["hakakses"] == 'manajer') {
         header('location:manajer/');
     }

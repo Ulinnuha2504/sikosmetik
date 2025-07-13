@@ -59,10 +59,6 @@ if (!$_SESSION["username"]) {
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Data Master</div>
-                        <a class="nav-link" href="index.php?page=pengguna">
-                            <div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
-                            Pengguna
-                        </a>
                         <a class="nav-link" href="index.php?page=jenisbarang">
                             <div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
                             Jenis Barang
