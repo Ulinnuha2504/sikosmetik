@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="hargabarang" name="hargabarang" type="text" placeholder="hargabarang" required />
+                        <input class="form-control" id="hargabarang" name="hargabarang" type="number" placeholder="hargabarang" required />
                         <label for="Inputnamabarang">Harga barang</label>
                     </div>
 
@@ -32,7 +32,7 @@
                         {
                            
                         ?>
-                        <option value=""><?php echo $data['namajenisbarang'];?></option>
+                        <option value="<?php echo $data['idjenisbarang'];?>"><?php echo $data['namajenisbarang'];?></option>
                         <?php } ?>
                             
                         </select>
