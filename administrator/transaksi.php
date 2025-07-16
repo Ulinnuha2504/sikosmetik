@@ -52,7 +52,7 @@
                             <td><?php echo $data['idpengguna']; ?></td>
                             <td><?php echo 'Rp. ' . number_format($data['totalharga'], 0, ",", "."); ?></td>
                             <td>
-                                <a href="cetakkuitansi.php?id=<?php echo $data['idpenjualan']; ?>" onclick="center(this.href,'myWindow','700','700','yes');return false">
+                                <a href="cetaknota.php?id=<?php echo $data['idpenjualan']; ?>" onclick="center(this.href,'myWindow','700','700','yes');return false">
                                     <button type="button" class="btn btn-success btn-sm"><i class="fas fa-print"></i></button>
                                 </a>
                                 <a href="detailtransaksi.php?id=<?php echo $data['idpenjualan']; ?>" onclick="center(this.href,'myWindow','700','700','yes');return false">

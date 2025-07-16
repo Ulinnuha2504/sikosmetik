@@ -1,164 +1,129 @@
 <?php 
-//panggil koneksi
 include "../connectdb.php";
-//ambil data id (dari link)
-$kodeorder=mysqli_real_escape_string($sambung,$_GET["id"]);
+session_start();
 
-//panggil data dari transaksiorder berdasarkan kode order
-$qdata=mysqli_query($sambung, "SELECT * FROM transaksi inner join pengguna on transaksi.iduser=pengguna.iduser WHERE kodetransaksi='$kodetransaksi'");
-$data=mysqli_fetch_array($qdata);
+// Ambil kode transaksi dari URL
+$kodeorder = mysqli_real_escape_string($sambung, $_GET["id"]);
 
-//echo $data["nickname"];
+// Ambil data transaksi dan pengguna
+$qdata = mysqli_query($sambung, "SELECT * FROM transaksi 
+    INNER JOIN pengguna ON transaksi.idpengguna = pengguna.iduser 
+    WHERE idpenjualan = '$kodeorder'");
+$data = mysqli_fetch_array($qdata);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nota</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <style>
         @media screen {
-            .noprint{
-                display: block;
-            }
-            .noshow{
-                display: none;
-            }
+            .noprint { display: block; }
+            .noshow { display: none; }
         }
-        @media print{
-            .noprint{
-                display: none;
-            }
-            .noshow{
-                display: block;
-            }
+        @media print {
+            .noprint { display: none; }
+            .noshow { display: block; }
         }
-        thead th {
-            border-top: 2px solid;
-            border-color: darkgray;
-            border-bottom: 2px solid;
+        thead th, tfoot td {
+            border-top: 2px solid darkgray;
+            border-bottom: 2px solid darkgray;
         }
-        body,th,td {
+        body, th, td {
             font-size: 12pt;
         }
-        h3,h4 {
+        h3, h4 {
             line-height: 0.5;
-            letter-spacing: 0.5;
-        }
-        tfoot td {
-            border-top: 2px solid;
-            border-color: darkgray;
-            border-bottom: 2px solid;
         }
     </style>
-    <link href="css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div align="center">
-        <!-- tombol -->
-        <br><br>
-        <span class="noprint">
-        <a href="javascript:window.print();"><button class="btn btn-primary"><i class="fa fa-print"></i></button></a>
-        <a href="javascript:window.close();"><button class="btn btn-danger"><i class="fa fa-circle-xmark"></i></button></a>
-        </span>
-        <br><br>
-    <!-- Kop -->
-    <span style="font-size: 14pt; font-weight:normal;">NOTA</span><br>
-    <span style="font-size: 20pt; font-weight:bold; line-height:0.5;">SINAR KOSMESTIK THAMRIN SEMARANG</span>
-    <hr width="400">
+    <div class="container text-center mt-4">
+        <div class="noprint mb-3">
+            <a href="javascript:window.print();" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</a>
+            <a href="javascript:window.close();" class="btn btn-danger"><i class="fa fa-circle-xmark"></i> Tutup</a>
+        </div>
 
-    <!-- Bagian Atas -->
-    <table width="400" class="display table-striped">
-    <thead>
-        <tr>
-            <th colspan="3">Transaksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>No Nota</td>
-            <td>:</td>
-            <td> <?php echo $data["nonota"]; ?> </td>
-        </tr>
-        <tr>
-            <td>Tanggal Transaksi</td>
-            <td>:</td>
-            <td><?php echo $data['tanggaltransaksi']; ?></td>
-        </tr>
-        <tr>
-            <td>Jam</td>
-            <td>:</td>
-            <td><?php echo $data['jam']; ?></td>
-        </tr>
-        <tr>
-            <td>Kasir</td>
-            <td>:</td>
-            <td><?php echo '['.$data['iduser'].']'.$data['namauser']; ?></td>
-        </tr>
-    </tbody>
-    </table>
+        <h5 class="mb-3">NOTA</h5>
+        <h4 class="fw-bold">SINAR KOSMETIK THAMRIN SEMARANG</h4>
+        <hr class="mx-auto" style="width:400px">
 
-    <hr width="400">
+        <table class="table table-borderless mx-auto" style="width:400px">
+            <thead>
+                <tr>
+                    <th colspan="3" class="text-center">Transaksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-start">No Nota</td>
+                    <td class="text-center">:</td>
+                    <td class="text-start"><?php echo $data["nonota"]; ?></td>
+                </tr>
+                <tr>
+                    <td class="text-start">Tanggal Transaksi</td>
+                    <td class="text-center">:</td>
+                    <td class="text-start"><?php echo $data["tanggaltransaksi"]; ?></td>
+                </tr>
+                <tr>
+                    <td class="text-start">Jam</td>
+                    <td class="text-center">:</td>
+                    <td class="text-start"><?php echo $data["jam"]; ?></td>
+                </tr>
+                <tr>
+                    <td class="text-start">Kasir</td>
+                    <td class="text-center">:</td>
+                    <td class="text-start"><?php echo '['.$data['idpengguna'].'] '.$data['namauser']; ?></td>
+                </tr>
+            </tbody>
+        </table>
 
-    <table style="width: 400;">
-        <thead>
-            <tr style="text-align:center;">
-                <th>Nama Barang</th>
-                <th>Harga Barang</th>
-                <th>Jumlah Beli</th>
-                <th>Total</th>
-                <th>Total Pembelian</th>
-           </tr>
-        </thead>
-        <tbody>
-            <?php
-            //Membuat variabel nomor
-            $nomor = 0;
-            $total = 0;
-            //Query untuk memanggil data kategori dengan variabel qdata
-            $qdata = mysqli_query($sambung, "SELECT * FROM detailtransaksiorder inner join menu on detailtransaksiorder.idmenu=menu.idmenu WHERE kodeorder='$kodeorder'");
-            //perulangan WHILE dan penampungan data dalam array data
-            while ($data = mysqli_fetch_array($qdata))
-            //Awal perulangan
-                    {
-            //Membuat nomor urut
-            $nomor++;
-                    ?>
-            <tr>
-                <td class="text-center"><?php echo $nomor; ?></td>
-                <td><?php echo $data['namabarang']; ?></td>
-                <td class="text-end px-1"><?php echo number_format($data['hargabarang'],0,",",","); ?></td>
-                <td class="text-center"><?php echo $data['jmlorder']; ?></td>
-                <td class="text-end px-1">
-                <?php 
-                // rumus sub total 
-                $subtotal= $data['jmlbeli'] * $data['hargabarang'];
-                echo number_format($subtotal,0,",",",");
-                // rumus untuk total
-                $total = $total + $subtotal;
+        <hr class="mx-auto" style="width:400px">
+
+        <table class="table table-sm table-bordered mx-auto" style="width:400px">
+            <thead class="text-center">
+                <tr>
+                    <th>No</th>
+                    <th>Nama Barang</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $nomor = 1;
+                $total = 0;
+                $qdetail = mysqli_query($sambung, "SELECT * FROM detailtransaksi 
+                    INNER JOIN barang ON detailtransaksi.idbarang = barang.idbarang 
+                    WHERE idpenjualan = '$kodeorder'");
+                while ($row = mysqli_fetch_array($qdetail)) {
+                    $subtotal = $row['jumlah'] * $row['hargabarang'];
+                    $total += $subtotal;
                 ?>
-                </td>
-            </tr>
-                <?php 
-                    }
-                ?>
-        </tbody>
-        <tfoot>
-                <td colspan="4" class="text-end">Total</td>
-                <td class="text-end">
-                <?php 
-                echo number_format($total,0,",",",");
-                 ?>
-                </td>
-        </tfoot>
-    </table>
-    <br>
-    <table>
-        <td>--Terimakasih, Barang yang telah dibeli tidak dapat dikembalikan--</td>
-    </table>
+                <tr>
+                    <td class="text-center"><?php echo $nomor++; ?></td>
+                    <td><?php echo $row['namabarang']; ?></td>
+                    <td class="text-end"><?php echo number_format($row['hargabarang'], 0, ",", ","); ?></td>
+                    <td class="text-center"><?php echo $row['jumlah']; ?></td>
+                    <td class="text-end"><?php echo number_format($subtotal, 0, ",", ","); ?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-end"><strong>Total</strong></td>
+                    <td class="text-end"><strong><?php echo number_format($total, 0, ",", ","); ?></strong></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <p class="mt-3">-- Terima kasih. Barang yang telah dibeli tidak dapat dikembalikan. --</p>
     </div>
 </body>
 </html>
